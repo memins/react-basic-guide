@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import classes from "./App.module.css";
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
@@ -11,9 +12,9 @@ class App extends Component {
 
   state = {
     persons: [
-      { id: "a212", name: "Max", age: 28 },
-      { id: "b132", name: "Manu", age: 29 },
-      { id: "c432", name: "Stephanie", age: 26 },
+      { id: "asfa1", name: "Max", age: 28 },
+      { id: "vasdf1", name: "Manu", age: 29 },
+      { id: "asdf11", name: "Stephanie", age: 26 },
     ],
     otherState: "some other value",
     showPersons: false,
@@ -24,12 +25,33 @@ class App extends Component {
     return state;
   }
 
+  // componentWillMount() {
+  //   console.log('[App.js] componentWillMount');
+  // }
+
+  componentDidMount() {
+    console.log("[App.js] componentDidMount");
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("[App.js] shouldComponentUpdate");
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log("[App.js] componentDidUpdate");
+  }
+
   nameChangedHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex((p) => {
       return p.id === id;
     });
 
-    const person = { ...this.state.persons[personIndex] };
+    const person = {
+      ...this.state.persons[personIndex],
+    };
+
+    // const person = Object.assign({}, this.state.persons[personIndex]);
 
     person.name = event.target.value;
 
@@ -52,6 +74,7 @@ class App extends Component {
   };
 
   render() {
+    console.log("[App.js] render");
     let persons = null;
 
     if (this.state.showPersons) {
@@ -67,6 +90,7 @@ class App extends Component {
     return (
       <div className={classes.App}>
         <Cockpit
+          title={this.props.appTitle}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}
@@ -74,6 +98,7 @@ class App extends Component {
         {persons}
       </div>
     );
+    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
